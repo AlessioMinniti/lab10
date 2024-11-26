@@ -1,12 +1,13 @@
 package it.unibo.mvc;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Random;
 
 /**
  *
  */
 public final class DrawNumberImpl implements DrawNumber {
-
     private int choice;
     private final int min;
     private final int max;
@@ -14,13 +15,23 @@ public final class DrawNumberImpl implements DrawNumber {
     private int remainingAttempts;
     private final Random random = new Random();
 
+
+
     /**
      * @throws IllegalStateException if the configuration is not consistent
      */
+   
     public DrawNumberImpl(final int min, final int max, final int attempts) {
         this.min = min;
         this.max = max;
         this.attempts = attempts;
+        this.reset();
+    }
+
+    public DrawNumberImpl(Configuration config) {
+        this.min = config.getMin();
+        this.max = config.getMax();
+        this.attempts = config.getAttempts();
         this.reset();
     }
 

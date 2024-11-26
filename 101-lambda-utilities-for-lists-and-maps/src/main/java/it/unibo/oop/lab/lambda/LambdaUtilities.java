@@ -2,6 +2,7 @@ package it.unibo.oop.lab.lambda;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,13 +16,14 @@ import java.util.stream.IntStream;
 
 /**
  * This class will contain four utility functions on lists and maps, of which the first one is provided as example.
- * 
+ *
  * All such methods take as second argument a functional interface from the Java library (java.util.function).
  * This enables calling them by using the concise lambda syntax, as it's done in the main function.
  *
  * Realize the three methods **WITHOUT** using the Stream library, but only leveraging the lambdas.
  *
  */
+
 public final class LambdaUtilities {
 
     private LambdaUtilities() {
@@ -61,7 +63,12 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Optional.filter
          */
-        return null;
+        final List<Optional<T>> l = new ArrayList<>();
+        list.forEach(t -> {
+            final Optional<T> opt = Optional.of(t);
+            l.add(opt.filter(pre));
+        });
+        return l;
     }
 
     /**
@@ -80,7 +87,28 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Map.merge
          */
-        return null;
+        final Map<R, Set<T>> map = new HashMap<>();
+        // list.forEach(t->{
+        //     s.add(t);
+        //     map.merge(op.apply(t),s, new BiFunction<Set<T>,Set<T>,Set<T>>() {
+        //         @Override
+        //         public Set<T> apply(Set<T> t, Set<T> u) {
+        //             // TODO Auto-generated method stub
+        //             t.addAll(u);
+        //             return t;
+        //         }
+
+        //     });
+        //     s.clear();
+        // });
+
+        list.forEach(t -> {
+            map.merge(op.apply(t), new HashSet<>(Set.of(t)), (t1, t2) -> {
+                    t1.addAll(t2);
+                    return t1;
+                });
+        });
+        return map;
     }
 
     /**
@@ -101,7 +129,21 @@ public final class LambdaUtilities {
          *
          * Keep in mind that a map can be iterated through its forEach method
          */
-        return null;
+        final Map<K, V> m = new HashMap<>();
+
+        // map.forEach(new BiConsumer<K,Optional<V>>() {
+        //     @Override
+        //     public void accept(K t, Optional<V> u) {
+        //         // TODO Auto-generated method stub
+        //         u.orElse(def.get());
+        // }
+        // });
+
+        map.forEach((t1, t2) -> {
+            m.put(t1, t2.orElseGet(def));
+        });
+
+        return m;
     }
 
     /**

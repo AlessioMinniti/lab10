@@ -27,7 +27,9 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
-        this.model = new DrawNumberImpl(MIN, MAX, ATTEMPTS);
+        ControllerReader reader = new ControllerReader();
+
+        this.model = new DrawNumberImpl(reader.getConfiguration().getMin(), reader.getConfiguration().getMax(),reader.getConfiguration().getAttempts());
     }
 
     @Override

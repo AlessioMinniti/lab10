@@ -1,5 +1,8 @@
 package it.unibo.mvc;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
 
 /**
  * Encapsulates the concept of configuration.
@@ -9,6 +12,7 @@ public final class Configuration {
     private final int max; 
     private final int min;
     private final int attempts;
+   
 
     private Configuration(final int max, final int min, final int attempts) {
         this.max = max;
@@ -61,6 +65,8 @@ public final class Configuration {
      * the builder, we emulate the so-called "named arguments".
      * 
      */
+
+
     public static class Builder {
 
         private static final int MIN = 0;
