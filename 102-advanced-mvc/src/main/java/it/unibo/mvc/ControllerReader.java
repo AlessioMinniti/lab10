@@ -1,17 +1,12 @@
 package it.unibo.mvc;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.concurrent.locks.Condition;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
-import it.unibo.mvc.Configuration.Builder;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class ControllerReader {
-    private static final String PATH ="src/main/resources/config.yml"; 
-    private File file = new File(PATH);
+    // private static final String PATH =ClassLoader.getSystemResource("config.yml");
+    // private File file = new File(PATH);
     Configuration.Builder build = new Configuration.Builder();
 
     public Configuration getConfiguration(){
@@ -20,22 +15,16 @@ public class ControllerReader {
 
     public ControllerReader(){
         int min = 0,max = 0,attempts = 0;
-        try(FileReader inputFile = new FileReader(file);
-            BufferedReader buff = new BufferedReader(inputFile)){
+        try(InputStream in = ClassLoader.getSystemResourceAsStream("src/main/resources/config.yml");
+            BufferedReader buff = new BufferedReader(new InputStreamReader(in))){
             String line;
             
             while((line = buff.readLine())!=null){
                 String[] strings = line.split(":");
                 switch(strings[1]){
-                    case "minimum":
-                        min = Integer.parseInt(strings[2]);
-                    break;
-                    case "maximum":
-                        max = Integer.parseInt(strings[2]);
-                        break;
-                    case "attempts":
-                        attempts = Integer.parseInt(strings[2]);
-                        break;
+                    case "minimum" -> min = Integer.parseInt(strings[2]);
+                    case "maximum" -> max = Integer.parseInt(strings[2]);
+                    case "attempts" -> attempts = Integer.parseInt(strings[2]);
                 }
             }
 

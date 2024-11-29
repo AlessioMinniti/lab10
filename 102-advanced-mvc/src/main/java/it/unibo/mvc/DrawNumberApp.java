@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  */
+@SuppressWarnings("unused")
 public final class DrawNumberApp implements DrawNumberViewObserver {
     private static final int MIN = 0;
     private static final int MAX = 100;
@@ -28,8 +29,8 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.start();
         }
         ControllerReader reader = new ControllerReader();
-
-        this.model = new DrawNumberImpl(reader.getConfiguration().getMin(), reader.getConfiguration().getMax(),reader.getConfiguration().getAttempts());
+        Configuration config = reader.getConfiguration();
+        this.model = new DrawNumberImpl(config.getMin(), config.getMax(),config.getAttempts());
     }
 
     @Override
@@ -68,7 +69,10 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * @throws FileNotFoundException 
      */
     public static void main(final String... args) throws FileNotFoundException {
-        new DrawNumberApp(new DrawNumberViewImpl());
+        new DrawNumberApp(new DrawNumberViewImpl(),
+                          new DrawNumberViewImpl(),
+                          new PrintStreamView(System.out),
+                          new PrintStreamView("output.log"));
     }
 
 }

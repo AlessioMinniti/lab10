@@ -1,9 +1,5 @@
 package it.unibo.mvc;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-
 /**
  * Encapsulates the concept of configuration.
  */

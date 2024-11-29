@@ -1,12 +1,11 @@
 package it.unibo.mvc;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.Random;
 
 /**
  *
  */
+@SuppressWarnings("unused")
 public final class DrawNumberImpl implements DrawNumber {
     private int choice;
     private final int min;
